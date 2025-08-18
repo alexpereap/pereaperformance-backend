@@ -4,7 +4,6 @@ import (
 	"alexpereap/pereaperformance-backend.git/entity"
 	"errors"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -16,30 +15,24 @@ type UserRepository interface {
 	CloseDb()
 }
 
-type database struct {
+type userRepository struct {
 	connection *gorm.DB
 }
 
-func NewUserRepository() UserRepository {
-	dsn := "host=localhost user=alex password=alex dbname=pereaperformance port=5432 sslmode=disable TimeZone=America/Bogota"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+func NewUserRepository(dbConn *gorm.DB) UserRepository {
 
-	if err != nil {
-		panic("failed to connect database")
-	}
+	dbConn.AutoMigrate(&entity.User{})
 
-	db.AutoMigrate(&entity.User{})
-
-	return &database{
-		connection: db,
+	return &userRepository{
+		connection: dbConn,
 	}
 }
 
-func (db *database) Save(user *entity.User) {
+func (db *userRepository) Save(user *entity.User) {
 	db.connection.Create(&user)
 }
 
-func (db *database) Delete(user entity.User) error {
+func (db *userRepository) Delete(user entity.User) error {
 	var existantUser entity.User
 	db.connection.First(&existantUser, "id = ?", user.ID)
 
@@ -52,19 +45,19 @@ func (db *database) Delete(user entity.User) error {
 	return nil
 }
 
-func (db *database) FindAll() []entity.User {
+func (db *userRepository) FindAll() []entity.User {
 	var users []entity.User
 	db.connection.Find(&users)
 	return users
 }
 
-func (db *database) FindOne(constraints map[string]interface{}) entity.User {
+func (db *userRepository) FindOne(constraints map[string]interface{}) entity.User {
 	var existantUser entity.User
 	db.connection.First(&existantUser, constraints)
 
 	return existantUser
 }
 
-func (db *database) CloseDb() {
+func (db *userRepository) CloseDb() {
 
 }

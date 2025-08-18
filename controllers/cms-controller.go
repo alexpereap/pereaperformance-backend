@@ -34,5 +34,5 @@ func (c *cmsController) Login(ctx *gin.Context) {
 }
 
 func (c *cmsController) Dashboard(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{"message": "ok in dashboard"})
+	ctx.HTML(http.StatusOK, "cms/dashboard.html", gin.H{})
 }

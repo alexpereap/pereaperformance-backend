@@ -2,10 +2,12 @@ package main
 
 import (
 	"alexpereap/pereaperformance-backend.git/controllers"
+	"alexpereap/pereaperformance-backend.git/database"
 	"alexpereap/pereaperformance-backend.git/middlewares"
 	"alexpereap/pereaperformance-backend.git/repository"
 	"alexpereap/pereaperformance-backend.git/routes"
 	"alexpereap/pereaperformance-backend.git/service"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -16,8 +18,14 @@ import (
 )
 
 func main() {
+	// DB
+	dbConn, err := database.Connect()
+	if err != nil {
+		log.Fatalf("DB connection error: %v", err)
+	}
+
 	// DI / wiring
-	userRepository := repository.NewUserRepository()
+	userRepository := repository.NewUserRepository(dbConn)
 	userService := service.NewUserService(userRepository)
 	loginService := service.NewLoginService(userService)
 
