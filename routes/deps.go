@@ -7,9 +7,10 @@ import (
 )
 
 type Dependencies struct {
-	Cms   controllers.CmsController
-	Users controllers.UserController
-	Login controllers.LoginController
+	Cms    controllers.CmsController
+	Users  controllers.UserController
+	Login  controllers.LoginController
+	Slides controllers.SlideController
 
 	AuthRequired func() gin.HandlerFunc
 }

@@ -26,12 +26,16 @@ func main() {
 
 	// DI / wiring
 	userRepository := repository.NewUserRepository(dbConn)
+	slideRepository := repository.NewSlideRepository(dbConn)
+
 	userService := service.NewUserService(userRepository)
 	loginService := service.NewLoginService(userService)
+	slideService := service.NewSlideService(slideRepository)
 
 	cmsController := controllers.NewCmsController()
 	userController := controllers.NewUserController(userService)
 	loginController := controllers.NewLoginController(loginService)
+	slideController := controllers.NewSlideController(slideService)
 
 	server := gin.New()
 	server.Use(gin.Recovery(), gin.Logger())
@@ -55,6 +59,7 @@ func main() {
 		Cms:          cmsController,
 		Users:        userController,
 		Login:        loginController,
+		Slides:       slideController,
 		AuthRequired: middlewares.AuthRequired, // middleware factory
 	})
 
