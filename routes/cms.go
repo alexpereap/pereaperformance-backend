@@ -21,6 +21,7 @@ func registerCMS(r *gin.Engine, d Dependencies) {
 
 		cms.GET("/login", d.Cms.Login)
 		cms.GET("/dashboard", d.Cms.Dashboard)
+		cms.GET("/logout", d.Login.LogOutHandler)
 
 		cms.POST("/login", d.Login.LoginHandler)
 	}

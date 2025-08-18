@@ -10,6 +10,7 @@ import (
 
 type LoginService interface {
 	LogInUser(username string, password string, ctx *gin.Context) error
+	LogOutUser(ctx *gin.Context) error
 }
 
 type loginService struct {
@@ -41,6 +42,17 @@ func (l *loginService) LogInUser(username string, password string, ctx *gin.Cont
 
 	if err := sess.Save(); err != nil {
 		return errors.New("Error creating session " + err.Error())
+	}
+
+	return nil
+}
+
+func (l *loginService) LogOutUser(ctx *gin.Context) error {
+	sess := sessions.Default(ctx)
+	sess.Clear()
+
+	if err := sess.Save(); err != nil {
+		return errors.New("Error clearing session " + err.Error())
 	}
 
 	return nil

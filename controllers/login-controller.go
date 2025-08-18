@@ -15,6 +15,7 @@ type LoginForm struct {
 
 type LoginController interface {
 	LoginHandler(c *gin.Context)
+	LogOutHandler(c *gin.Context)
 }
 
 type loginController struct {
@@ -43,4 +44,13 @@ func (l *loginController) LoginHandler(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusFound, "/cms/dashboard")
+}
+
+func (l *loginController) LogOutHandler(c *gin.Context) {
+	if err := l.service.LogOutUser(c); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.Redirect(http.StatusFound, "/cms/login")
 }
