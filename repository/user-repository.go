@@ -28,36 +28,36 @@ func NewUserRepository(dbConn *gorm.DB) UserRepository {
 	}
 }
 
-func (db *userRepository) Save(user *entity.User) {
-	db.connection.Create(&user)
+func (u *userRepository) Save(user *entity.User) {
+	u.connection.Create(&user)
 }
 
-func (db *userRepository) Delete(user entity.User) error {
+func (u *userRepository) Delete(user entity.User) error {
 	var existantUser entity.User
-	db.connection.First(&existantUser, "id = ?", user.ID)
+	u.connection.First(&existantUser, "id = ?", user.ID)
 
 	if existantUser.ID == 0 {
 		return errors.New("user not found")
 	}
 
-	db.connection.Delete(&user)
+	u.connection.Delete(&user)
 
 	return nil
 }
 
-func (db *userRepository) FindAll() []entity.User {
+func (u *userRepository) FindAll() []entity.User {
 	var users []entity.User
-	db.connection.Find(&users)
+	u.connection.Find(&users)
 	return users
 }
 
-func (db *userRepository) FindOne(constraints map[string]interface{}) entity.User {
+func (u *userRepository) FindOne(constraints map[string]interface{}) entity.User {
 	var existantUser entity.User
-	db.connection.First(&existantUser, constraints)
+	u.connection.First(&existantUser, constraints)
 
 	return existantUser
 }
 
-func (db *userRepository) CloseDb() {
+func (u *userRepository) CloseDb() {
 
 }
