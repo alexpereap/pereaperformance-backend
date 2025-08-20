@@ -7,9 +7,12 @@ import (
 	"alexpereap/pereaperformance-backend.git/repository"
 	"alexpereap/pereaperformance-backend.git/routes"
 	"alexpereap/pereaperformance-backend.git/service"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -39,7 +42,9 @@ func main() {
 
 	server := gin.New()
 	server.Use(gin.Recovery(), gin.Logger())
-	server.LoadHTMLGlob("templates/**/*.html")
+	if err := setRecursiveTemplates(server); err != nil {
+		panic(err)
+	}
 	server.Static("/css", "./assets/css")
 
 	// sesiones (global scope)
@@ -69,4 +74,26 @@ func main() {
 		port = "5000"
 	}
 	server.Run(":" + port)
+}
+
+func setRecursiveTemplates(server *gin.Engine) error {
+	tpl := template.New("")
+	err := filepath.Walk("templates", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		if strings.HasSuffix(path, ".html") {
+			_, perr := tpl.ParseFiles(path)
+			return perr
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	server.SetHTMLTemplate(tpl)
+	return nil
 }

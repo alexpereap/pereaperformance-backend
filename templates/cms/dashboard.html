@@ -1,8 +1,8 @@
 {{ define "cms/dashboard.html" }}
-    {{ template "header.html" . }}
+    {{ template "header" . }}
     <div class="container">
         <ul>
-            <li><a href="#" >Slides</a></li>
+            <li><a href="slides" >Slides</a></li>
             <li><a href="#" >Single page</a></li>
             <li><a href="#" >Cars</a></li>
             <li><a href="#" >Services</a></li>
@@ -10,4 +10,5 @@
             <li><a href="#" >Blog</a></li>
         </ul>
     </div>
+    {{ template "footer" }}
 {{ end }}
