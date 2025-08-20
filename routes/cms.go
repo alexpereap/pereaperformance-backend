@@ -23,10 +23,8 @@ func registerCMS(r *gin.Engine, d Dependencies) {
 		cms.GET("/logout", d.Login.LogOutHandler)
 		cms.GET("/dashboard", d.Cms.Dashboard)
 
-		cms.GET("slides", func(ctx *gin.Context) {
-			data := d.Slides.FindAll()
-			ctx.JSON(http.StatusOK, data)
-		})
+		cms.GET("/slides", d.Slides.Dashboard)
+		cms.GET("/slides/create", d.Slides.CreateForm)
 
 		cms.POST("/login", d.Login.LoginHandler)
 	}

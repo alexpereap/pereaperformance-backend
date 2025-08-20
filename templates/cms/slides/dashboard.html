@@ -1,0 +1,19 @@
+{{ define "cms/slides/dashboard.html" }}
+    {{ template "header" . }}
+    <div class="container">
+        <h1>Slides</h1>
+        <div>
+            <a href="slides/create" class="btn btn-primary">Add</a>
+        </div>
+        <table class="table" >
+            <thead>
+                <tr>
+                    <td>Image</td>
+                    <td>Title</td>
+                    <td>Position</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    {{ template "footer" }}
+{{ end }}

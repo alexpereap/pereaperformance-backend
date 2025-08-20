@@ -1,0 +1,22 @@
+{{ define "cms/slides/createForm.html" }}
+    {{ template "header" . }}
+    <div class="container">
+        <h1>Create a slide</h1>
+        <form action="slides/create" method="POST" >
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="text" class="form-control" id="image" >
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" >
+            </div>
+            <div class="mb-3">
+                <label for="position" class="form-label">Position</label>
+                <input type="text" class="form-control" id="position" >
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    {{ template "footer" }}
+{{ end }}
