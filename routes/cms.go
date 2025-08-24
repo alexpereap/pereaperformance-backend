@@ -20,6 +20,7 @@ func registerCMS(r *gin.Engine, d Dependencies) {
 		})
 
 		cms.GET("/login", d.Cms.Login)
+		cms.POST("/login", d.Login.LoginHandler)
 		cms.GET("/logout", d.Login.LogOutHandler)
 		cms.GET("/dashboard", d.Cms.Dashboard)
 
@@ -38,7 +39,5 @@ func registerCMS(r *gin.Engine, d Dependencies) {
 			sessions.Save()
 			ctx.Redirect(http.StatusFound, "/cms/dashboard")
 		})
-
-		cms.POST("/login", d.Login.LoginHandler)
 	}
 }
