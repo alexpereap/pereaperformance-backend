@@ -1,6 +1,11 @@
 {{ define "cms/dashboard.html" }}
     {{ template "header" . }}
     <div class="container">
+        {{ if .flash_success }}
+        <div class="alert alert-success" role="alert">
+            {{ .flash_success }}
+        </div>
+        {{ end }}
         <ul>
             <li><a href="slides" >Slides</a></li>
             <li><a href="#" >Single page</a></li>

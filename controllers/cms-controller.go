@@ -34,5 +34,15 @@ func (c *cmsController) Login(ctx *gin.Context) {
 }
 
 func (c *cmsController) Dashboard(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "cms/dashboard.html", gin.H{})
+	session := sessions.Default(ctx)
+
+	flash_success := session.Get("flash-success")
+	if flash_success != nil {
+		session.Delete("flash-success")
+		session.Save()
+	}
+
+	ctx.HTML(http.StatusOK, "cms/dashboard.html", gin.H{
+		"flash_success": flash_success,
+	})
 }

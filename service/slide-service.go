@@ -7,6 +7,7 @@ import (
 
 type SlideService interface {
 	FindAll() []entity.Slide
+	Save(slide *entity.Slide) *entity.Slide
 }
 
 type slideService struct {
@@ -21,4 +22,9 @@ func NewSlideService(repo repository.SlideRepository) SlideService {
 
 func (service *slideService) FindAll() []entity.Slide {
 	return service.SlideRepository.FindAll()
+}
+
+func (service *slideService) Save(slide *entity.Slide) *entity.Slide {
+	service.SlideRepository.Save(slide)
+	return slide
 }

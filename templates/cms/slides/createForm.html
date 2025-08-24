@@ -2,18 +2,18 @@
     {{ template "header" . }}
     <div class="container">
         <h1>Create a slide</h1>
-        <form action="slides/create" method="POST" >
+        <form enctype="multipart/form-data" action="/cms/slides/create" method="POST" >
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" class="form-control" id="image" >
+                <input type="file" class="form-control" id="image" name="image">
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" >
+                <input type="text" class="form-control" id="title" name="title" >
             </div>
             <div class="mb-3">
                 <label for="position" class="form-label">Position</label>
-                <input type="text" class="form-control" id="position" >
+                <input type="text" class="form-control" id="title_pos" name="title_pos" >
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

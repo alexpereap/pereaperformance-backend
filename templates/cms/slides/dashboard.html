@@ -8,11 +8,22 @@
         <table class="table" >
             <thead>
                 <tr>
+                    <td>ID</td>
                     <td>Image</td>
                     <td>Title</td>
                     <td>Position</td>
                 </tr>
             </thead>
+            <tbody>
+                {{ range.slides }}
+                <tr>
+                    <td>{{ .ID }}</td>
+                    <td><img src="/uploads/slides/{{ .Image }}" alt="{{ .Title }}" width="120"></td>
+                    <td>{{ .Title }}</td>
+                    <td>{{ .TitlePos }}</td>
+                </tr>
+                {{ end }}
+            </tbody>
         </table>
     </div>
     {{ template "footer" }}

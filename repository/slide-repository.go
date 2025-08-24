@@ -8,6 +8,7 @@ import (
 
 type SlideRepository interface {
 	FindAll() []entity.Slide
+	Save(slide *entity.Slide) *entity.Slide
 }
 
 type slideRepository struct {
@@ -28,4 +29,9 @@ func (s *slideRepository) FindAll() []entity.Slide {
 	s.connection.Find(&slides)
 
 	return slides
+}
+
+func (s *slideRepository) Save(slide *entity.Slide) *entity.Slide {
+	s.connection.Create(&slide)
+	return slide
 }

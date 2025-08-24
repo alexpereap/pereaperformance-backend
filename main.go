@@ -46,6 +46,7 @@ func main() {
 		panic(err)
 	}
 	server.Static("/css", "./assets/css")
+	server.Static("/uploads", "./uploads")
 
 	// sesiones (global scope)
 	secret := []byte("FLrhYZvn4ccpecNZ2jlGg5VIFTscEy4O")
